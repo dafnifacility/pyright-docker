@@ -9,26 +9,14 @@ on:
     tags: ["v*"]
 
 jobs:
-  publish:
+  publish-fat:
     name: Publish Docker Image
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
       uses: actions/checkout@v2
-    - uses: docker/build-push-action@v1
-      with:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
-        repository: dafnifacility/pyright-docker/pyright-slim
-
-        push: ${{ github.event_name != 'pull_request' }}
-        tags: latest
-        tag_with_ref: true
-        labels: |
-          org.opencontainers.image.source=${{ github.event.repository.clone_url }}
-          org.opencontainers.image.revision=${{ github.sha }}
-    - uses: docker/build-push-action@v1
+    - name: Build "fat" image
+      uses: docker/build-push-action@v1
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -38,6 +26,26 @@ jobs:
         tags: latest
         tag_with_ref: true
         dockerfile: ./Dockerfile-gcc
+        labels: |
+          org.opencontainers.image.source=${{ github.event.repository.clone_url }}
+          org.opencontainers.image.revision=${{ github.sha }}
+  publish-slim:
+    name: Publish Docker Image
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Build "slim" image
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
+        repository: dafnifacility/pyright-docker/pyright-slim
+
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: latest
+        tag_with_ref: true
         labels: |
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
           org.opencontainers.image.revision=${{ github.sha }}
