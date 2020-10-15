@@ -10,7 +10,7 @@ on:
 
 jobs:
   publish-fat:
-    name: Publish Docker Image
+    name: Publish Fat Docker Image
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
@@ -30,7 +30,7 @@ jobs:
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
           org.opencontainers.image.revision=${{ github.sha }}
   publish-slim:
-    name: Publish Docker Image
+    name: Publish Slim Docker Image
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
