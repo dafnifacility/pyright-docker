@@ -20,10 +20,11 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        repository: dafnifacility/pyright-docker/pyright
+        repository: dafnifacility/pyright-docker/pyright-slim
 
         push: ${{ github.event_name != 'pull_request' }}
-        tags: latest-slim
+        tags: latest
+        tag_with_ref: true
         labels: |
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
           org.opencontainers.image.revision=${{ github.sha }}
