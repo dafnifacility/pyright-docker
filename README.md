@@ -1,5 +1,7 @@
 # Pyright Docker Image
 
+[![Docker](https://github.com/dafnifacility/pyright-docker/workflows/Docker/badge.svg)](https://github.com/orgs/dafnifacility/packages?repo_name=pyright-docker)
+
 This is a Docker image containing [Pyright](https://github.com/Microsoft/pyright) -
 intended to be used for running PyRight under CI to check type problems.
 
