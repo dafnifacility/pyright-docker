@@ -1,0 +1,8 @@
+FROM alpine:3
+COPY entrypoint.sh /entrypoint.sh
+RUN apk add --no-cache nodejs npm python3 python3-dev py3-pip build-base && \
+  npm install -g pyright && \
+  install -d -o nobody /code /.local && chmod +x /entrypoint.sh
+USER nobody
+WORKDIR /code
+ENTRYPOINT ["/entrypoint.sh"]
