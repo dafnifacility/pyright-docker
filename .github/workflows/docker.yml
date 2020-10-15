@@ -19,8 +19,8 @@ jobs:
       uses: docker/build-push-action@v1
       with:
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
+        password: ${{ secrets.CR_PAT }}
+        registry: ghcr.io
         repository: dafnifacility/pyright-docker/pyright
         push: ${{ github.event_name != 'pull_request' }}
         tags: latest
@@ -39,8 +39,8 @@ jobs:
       uses: docker/build-push-action@v1
       with:
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
+        password: ${{ secrets.CR_PAT }}
+        registry: ghcr.io
         repository: dafnifacility/pyright-docker/pyright-slim
 
         push: ${{ github.event_name != 'pull_request' }}
