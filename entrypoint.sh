@@ -5,7 +5,7 @@ if [ -z "$(ls -A /code)" ]; then
 fi
 if [ -f /code/requirements.txt ]; then
   echo "requirements.txt detected, installing from pip"
-  pip install -r /code/requirements.txt
+  pip install --user -r /code/requirements.txt
 else
   echo "no /code/requirements.txt detected, not doing pip install"
 fi
