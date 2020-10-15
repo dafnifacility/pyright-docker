@@ -15,43 +15,28 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v2
-    - name: Prepare
-      id: prep
-      run: |
-        DOCKER_IMAGE=dafnifacility/pyright-docker/pyright
-        VERSION=edge
-        if [[ $GITHUB_REF == refs/tags/* ]]; then
-          VERSION=${GITHUB_REF#refs/tags/}
-        elif [[ $GITHUB_REF == refs/heads/* ]]; then
-          VERSION=$(echo ${GITHUB_REF#refs/heads/} | sed -r 's#/+#-#g')
-        elif [[ $GITHUB_REF == refs/pull/* ]]; then
-          VERSION=pr-${{ github.event.number }}
-        fi
-        TAGS="${DOCKER_IMAGE}:${VERSION}"
-        if [ "${{ github.event_name }}" = "push" ]; then
-          TAGS="$TAGS,${DOCKER_IMAGE}:sha-${GITHUB_SHA::8}"
-        fi
-        echo ::set-output name=version::${VERSION}
-        echo ::set-output name=tags::${TAGS}
-        echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-    - uses: docker/build-push-action@v2
+    - uses: docker/build-push-action@v1
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
         repository: dafnifacility/pyright-docker/pyright
+
+        push: ${{ github.event_name != 'pull_request' }}
         tags: latest-slim
         labels: |
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
           org.opencontainers.image.revision=${{ github.sha }}
-    - uses: docker/build-push-action@v2
+    - uses: docker/build-push-action@v1
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
         repository: dafnifacility/pyright-docker/pyright
+        push: ${{ github.event_name != 'pull_request' }}
         tags: latest
-        file: ./Dockerfile-gcc
+        tag_with_ref: true
+        dockerfile: ./Dockerfile-gcc
         labels: |
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
           org.opencontainers.image.revision=${{ github.sha }}
