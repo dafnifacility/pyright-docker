@@ -1,6 +1,6 @@
 FROM alpine:3
 COPY entrypoint.sh /entrypoint.sh
-RUN apk add --no-cache nodejs npm python3 py3-pip && \
+RUN apk add --no-cache nodejs npm python3 py3-pip rust && \
   npm install -g pyright && \
   install -d -o nobody /code /.local && chmod +x /entrypoint.sh
 # Also add the C stuff for c extensions
