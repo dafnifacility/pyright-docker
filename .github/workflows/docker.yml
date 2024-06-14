@@ -27,7 +27,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: ${{ github.event_name != 'pull_request' }}
-        tags: dafnifacility/pyright-docker/pyright:latest
+        tags: ghcr.io/dafnifacility/pyright-docker/pyright:latest
         dockerfile: ./Dockerfile-gcc
         labels: |
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
@@ -50,7 +50,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: ${{ github.event_name != 'pull_request' }}
-        tags:  dafnifacility/pyright-docker/pyright-slim:latest
+        tags:  ghcr.io/dafnifacility/pyright-docker/pyright-slim:latest
         labels: |
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
           org.opencontainers.image.revision=${{ github.sha }}
