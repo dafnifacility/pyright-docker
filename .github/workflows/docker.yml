@@ -21,7 +21,7 @@ jobs:
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
-        username: ${{ github.actor }}
+        username: ${{ github.repository_owner }}
         password: ${{ secrets.CR_PAT }}
     - name: Build "fat" image
       uses: docker/build-push-action@v5
@@ -44,7 +44,7 @@ jobs:
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
-        username: ${{ github.actor }}
+        username: ${{ github.repository_owner }}
         password: ${{ secrets.CR_PAT }}
     - name: Build "slim" image
       uses: docker/build-push-action@v5
