@@ -15,16 +15,19 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.CR_PAT }}
     - name: Build "fat" image
       uses: docker/build-push-action@v5
       with:
-        username: ${{ github.actor }}
-        password: ${{ secrets.CR_PAT }}
-        registry: ghcr.io
-        repository: dafnifacility/pyright-docker/pyright
         push: ${{ github.event_name != 'pull_request' }}
-        tags: latest
-        tag_with_ref: true
+        tags: dafnifacility/pyright-docker/pyright:latest
         dockerfile: ./Dockerfile-gcc
         labels: |
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
@@ -35,17 +38,19 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.CR_PAT }}
     - name: Build "slim" image
       uses: docker/build-push-action@v5
       with:
-        username: ${{ github.actor }}
-        password: ${{ secrets.CR_PAT }}
-        registry: ghcr.io
-        repository: dafnifacility/pyright-docker/pyright-slim
-
         push: ${{ github.event_name != 'pull_request' }}
-        tags: latest
-        tag_with_ref: true
+        tags:  dafnifacility/pyright-docker/pyright-slim:latest
         labels: |
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
           org.opencontainers.image.revision=${{ github.sha }}
