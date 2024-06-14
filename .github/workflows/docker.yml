@@ -16,7 +16,7 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
     - name: Build "fat" image
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v5
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.CR_PAT }}
@@ -36,7 +36,7 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
     - name: Build "slim" image
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v5
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.CR_PAT }}
